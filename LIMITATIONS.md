@@ -1,0 +1,3 @@
+- No real-world calibration.
+- Not suitable for operational decision making.
+- Failure patterns are illustrative, not predictive.

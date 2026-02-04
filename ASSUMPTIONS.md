@@ -1,0 +1,3 @@
+- Agents act on partial, delayed information.
+- All events are processed deterministically.
+- This system prioritizes explainability over realism.

@@ -1,0 +1,6 @@
+numpy>=1.26
+networkx>=3.2
+
+# ML (optional reasoning layer)
+torch>=2.1
+torch-geometric>=2.4

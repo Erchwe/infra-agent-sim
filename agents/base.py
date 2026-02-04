@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 
 @dataclass
@@ -21,22 +21,18 @@ class BaseAgent(ABC):
     @abstractmethod
     def perceive(self, global_state: Dict[str, Any]) -> None:
         """
-        Read-only perception of the world.
-        No mutation allowed.
+        Read-only perception.
         """
         pass
 
     @abstractmethod
-    def decide(self) -> list:
+    def decide(self) -> List["Event"]:
         """
-        Returns a list of Events.
-        Agent does NOT apply effects directly.
+        Produce intent as domain events.
+        NO timing. NO side effects.
         """
         pass
 
     def apply_local_effect(self, delta_resource: float, delta_stress: float):
-        """
-        Explicit, auditable state change.
-        """
         self.state.resource_level += delta_resource
         self.state.stress_level += delta_stress

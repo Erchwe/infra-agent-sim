@@ -2,7 +2,6 @@
 
 from agents.base import BaseAgent, AgentState
 from env.events import Event
-import random
 
 
 class CitizenAgent(BaseAgent):
@@ -11,7 +10,6 @@ class CitizenAgent(BaseAgent):
         agent_id: str,
         demand_profile: float,
         panic_threshold: float,
-        compliance_probability: float,
     ):
         super().__init__(
             agent_id=agent_id,
@@ -20,31 +18,23 @@ class CitizenAgent(BaseAgent):
         )
         self.demand_profile = demand_profile
         self.panic_threshold = panic_threshold
-        self.compliance_probability = compliance_probability
+        self.perceived_stress = 0.0
 
     def perceive(self, global_state):
         self.perceived_stress = global_state["agents"][self.agent_id].stress_level
 
     def decide(self):
-        events = []
-
         if self.perceived_stress >= self.panic_threshold:
-            events.append(
-                Event(
-                    timestamp=global_state["time"] + 1,
-                    event_type="DEMAND_SPIKE",
-                    source=self.agent_id,
-                    payload={"intensity": self.demand_profile * 2},
-                )
-            )
+            intensity = self.demand_profile * 2
+            event_type = "DEMAND_SPIKE"
         else:
-            events.append(
-                Event(
-                    timestamp=global_state["time"] + 1,
-                    event_type="NORMAL_DEMAND",
-                    source=self.agent_id,
-                    payload={"intensity": self.demand_profile},
-                )
-            )
+            intensity = self.demand_profile
+            event_type = "NORMAL_DEMAND"
 
-        return events
+        return [
+            Event(
+                event_type=event_type,
+                source=self.agent_id,
+                payload={"intensity": intensity},
+            )
+        ]

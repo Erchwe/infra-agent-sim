@@ -17,20 +17,28 @@ class PolicyAgent(BaseAgent):
             initial_state=AgentState(resource_level=budget, stress_level=0.0),
         )
         self.intervention_delay = intervention_delay
+        self.observed_system_stress = 0.0
 
     def perceive(self, global_state):
-        self.system_stress = sum(
+        # Still simplified; partial observability can come later
+        self.observed_system_stress = sum(
             a.stress_level for a in global_state["agents"].values()
         )
 
     def decide(self):
-        if self.system_stress > 1.0 and self.state.resource_level > 0:
-            return [
-                Event(
-                    timestamp=global_state["time"] + self.intervention_delay,
-                    event_type="POLICY_INTERVENTION",
-                    source=self.agent_id,
-                    payload={"budget_release": 0.2},
-                )
-            ]
-        return []
+        if self.observed_system_stress <= 1.0:
+            return []
+
+        if self.state.resource_level <= 0:
+            return []
+
+        return [
+            Event(
+                event_type="POLICY_INTENT",
+                source=self.agent_id,
+                payload={
+                    "desired_delay": self.intervention_delay,
+                    "budget_release": 0.2,
+                },
+            )
+        ]

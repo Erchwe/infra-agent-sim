@@ -19,3 +19,8 @@
 - The model systematically ignores adaptation.
   Agents do not learn, improvise, or violate protocol, which can understate
   both resilience and catastrophic collapse observed in real systems.
+
+- The reasoning model does not learn from outcomes.
+  Graph-based analysis is inference-only and does not adapt across runs.
+  This prevents overfitting to simulated failures, but also limits the
+  system’s ability to generalize beyond explicitly modeled structures.

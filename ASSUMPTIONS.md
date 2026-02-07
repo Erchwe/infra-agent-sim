@@ -16,3 +16,8 @@
 - This system prioritizes explainability over realism.
   Complex behaviors are simplified or omitted if their effects cannot be
   causally traced through explicit state transitions and events.
+
+- Machine learning is used strictly for post-hoc interpretation.
+  Graph-based models analyze observed failure episodes to highlight
+  structural risk propagation, but do not influence agent decisions,
+  event scheduling, or system evolution.

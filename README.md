@@ -132,6 +132,21 @@ or predict future outcomes.
 
 ---
 
+## Cloud Execution (Reproducibility)
+
+This system is designed to be executable in a clean cloud environment
+to support reproducible execution and post-hoc auditability.
+
+A minimal VM-based setup is used intentionally:
+- to avoid orchestration complexity,
+- to keep execution deterministic,
+- and to make system behavior directly inspectable.
+
+Cloud execution is treated as an execution surface, not as a scaling strategy.
+The simulation is finite, batch-oriented, and CPU-first by design.
+
+---
+
 ## Status
 
 This repository implements the core system contracts of an event-driven
